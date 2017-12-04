@@ -5,6 +5,10 @@ var momObj = function() {
 	this.bigEye = new Image()
 	this.bigBody = new Image()
 	this.bigTail = new Image()
+	this.bigTailList = []
+
+	this.bigTailTimer = 0
+	this.bigTailCount = 0
 }
 momObj.prototype.init = function() {
 	this.x = canWidth * 0.5
@@ -12,6 +16,10 @@ momObj.prototype.init = function() {
 	this.bigEye.src = './src/bigEye0.png'
 	this.bigBody.src = './src/bigSwim0.png'
 	this.bigTail.src = './src/bigTail0.png'
+	for (var i = 0; i < 8; i++) {
+		this.bigTailList[i] = new Image()
+		this.bigTailList[i].src = './src/bigTail' + i + '.png'
+	}
 }
 momObj.prototype.draw = function() {
 	//lerp x,y
@@ -23,6 +31,13 @@ momObj.prototype.draw = function() {
 	var beta = Math.atan2(deltaY, deltaX) + Math.PI
 	//lerp angle
 	this.angle = lerpAngle(beta, this.angle, 0.6)
+	this.bigTailTimer += deltaTime
+	if (this.bigTailTimer > 50) {
+		this.bigTailCount = (this.bigTailCount + 1) % 8
+		// console.log(this.babyTailList[this.babyTailCount].width)
+		this.bigTail = this.bigTailList[this.bigTailCount]
+		this.bigTailTimer %= 50
+	}
 
 	ctx1.save()
 	ctx1.translate(this.x, this.y)

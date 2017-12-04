@@ -5,6 +5,10 @@ var babyObj = function() {
 	this.babyEye = new Image()
 	this.babyBody = new Image()
 	this.babyTail = new Image()
+	this.babyTailList = []
+
+	this.babyTailTimer = 0
+	this.babyTailCount = 0
 }
 babyObj.prototype.init = function() {
 	this.x = canWidth * 0.5 - 50
@@ -13,6 +17,12 @@ babyObj.prototype.init = function() {
 	this.babyEye.src = './src/babyEye0.png'
 	this.babyBody.src = './src/babyFade0.png'
 	this.babyTail.src = './src/babyTail0.png'
+
+	//小鱼尾巴摆动序列帧
+	// for (var i = 0; i < 8; i++) {
+	// 	this.babyTailList[i] = new Image()
+	// 	this.babyTailList[i].src = './src/babyTail' + i + '.png'
+	// }
 }
 babyObj.prototype.draw = function() {
 	//lerp x,y
@@ -24,6 +34,15 @@ babyObj.prototype.draw = function() {
 	var beta = Math.atan2(deltaY, deltaX) + Math.PI
 	//lerp angle
 	this.angle = lerpAngle(beta, this.angle, 0.6)
+	//baby tail count
+	// this.babyTailTimer += deltaTime
+	// if (this.babyTailTimer > 50) {
+	// 	this.babyTailCount = (this.babyTailCount + 1) % 8
+	// 	// console.log(this.babyTailList[this.babyTailCount].width)
+	// 	// this.babyTail = this.babyTailList[this.babyTailCount]
+	// 	this.babyTailTimer %= 50
+	// }
+
 	ctx1.save()
 	ctx1.translate(this.x, this.y)
 	ctx1.rotate(this.angle)
